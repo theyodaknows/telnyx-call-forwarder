@@ -50,7 +50,7 @@ test('dialMobile calls dial with correct params and correct Base64 client_state'
   assert.strictEqual(mockDialFn.mock.calls.length, 1);
   const args = mockDialFn.mock.calls[0].arguments[0];
   assert.strictEqual(args.to, process.env.MOBILE_NUMBER);
-  assert.strictEqual(args.from, process.env.TELNYX_SIP_NUMBER);
+  assert.strictEqual(args.from_number, process.env.TELNYX_SIP_NUMBER);
   assert.strictEqual(args.connection_id, process.env.TELNYX_CONNECTION_ID);
   // Decode and verify client_state contains bridgeId
   const decoded = JSON.parse(Buffer.from(args.client_state, 'base64').toString('utf8'));

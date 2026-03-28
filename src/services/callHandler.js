@@ -17,7 +17,7 @@ async function dialMobile(inboundCallControlId) {
   return telnyx.calls.dial({
     connection_id: config.telnyxConnectionId,
     to: config.mobileNumber,
-    from: config.telnyxSipNumber,
+    from_number: config.telnyxSipNumber,
     client_state: clientState,
     timeout_secs: 30,
   });
