@@ -140,12 +140,12 @@ test('call.answered with client_state returns 200 and calls bridgeCalls', async 
   assert.strictEqual(mockDialMobile.mock.calls.length, 0);
 });
 
-test('call.answered without client_state returns 200 and calls dialMobile', async () => {
+test('call.answered without client_state returns 200 and does NOT call dialMobile', async () => {
   mockDialMobile.mock.resetCalls();
   mockBridgeCalls.mock.resetCalls();
   const result = await makeRequest(makeWebhookBody('call.answered', 'incoming'));
   assert.strictEqual(result.statusCode, 200);
-  assert.strictEqual(mockDialMobile.mock.calls.length, 1);
+  assert.strictEqual(mockDialMobile.mock.calls.length, 0);
   assert.strictEqual(mockBridgeCalls.mock.calls.length, 0);
 });
 

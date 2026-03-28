@@ -37,11 +37,15 @@ const callHandler = require('../src/services/callHandler');
 // Restore immediately after callHandler is loaded
 Module._load = originalLoad;
 
-test('handleIncomingCall calls answer with correct callControlId', async () => {
-  mockAnswerFn.mock.resetCalls();
-  await callHandler.handleIncomingCall('ctrl-abc');
-  assert.strictEqual(mockAnswerFn.mock.calls.length, 1);
-  assert.strictEqual(mockAnswerFn.mock.calls[0].arguments[0], 'ctrl-abc');
+test('handleIncomingCall calls dialMobile with inbound call control ID', async () => {
+  mockDialFn.mock.resetCalls();
+  await callHandler.handleIncomingCall('inbound-ctrl-123');
+  assert.strictEqual(mockDialFn.mock.calls.length, 1);
+  const args = mockDialFn.mock.calls[0].arguments[0];
+  assert.strictEqual(args.to, process.env.MOBILE_NUMBER);
+  // Verify client_state contains the inbound call_control_id
+  const decoded = JSON.parse(Buffer.from(args.client_state, 'base64').toString('utf8'));
+  assert.strictEqual(decoded.bridgeId, 'inbound-ctrl-123');
 });
 
 test('dialMobile calls dial with correct params and correct Base64 client_state', async () => {

@@ -4,8 +4,8 @@ const config = require('../config');
 const telnyx = Telnyx(config.telnyxApiKey);
 
 async function handleIncomingCall(callControlId) {
-  console.log(`Answering inbound call: ${callControlId}`);
-  return telnyx.calls.actions.answer(callControlId, {});
+  console.log(`Incoming call received: ${callControlId}, immediately dialing mobile`);
+  return dialMobile(callControlId);
 }
 
 async function dialMobile(inboundCallControlId) {

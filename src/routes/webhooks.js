@@ -31,13 +31,12 @@ router.post('/', (req, res) => {
 
       case 'call.answered':
         if (client_state) {
+          console.log(`Outbound call answered: ${call_control_id}, bridging`);
           callHandler.bridgeCalls(call_control_id, client_state).catch(err => {
             console.error(`Error bridging calls for ${call_control_id}:`, err.message);
           });
         } else {
-          callHandler.dialMobile(call_control_id).catch(err => {
-            console.error(`Error dialing mobile from ${call_control_id}:`, err.message);
-          });
+          console.log(`Inbound call answered: ${call_control_id}, waiting for bridge`);
         }
         break;
 
