@@ -14,10 +14,12 @@ async function dialMobile(inboundCallControlId) {
   ).toString('base64');
 
   console.log(`Dialing mobile: ${config.mobileNumber} from ${config.telnyxSipNumber}`);
+  console.log(`DEBUG: config.telnyxSipNumber = "${config.telnyxSipNumber}" (type: ${typeof config.telnyxSipNumber}, length: ${config.telnyxSipNumber?.length})`);
+  console.log(`DEBUG: config.telnyxConnectionId = "${config.telnyxConnectionId}"`);
   return telnyx.calls.dial({
     connection_id: config.telnyxConnectionId,
     to: config.mobileNumber,
-    from_number: config.telnyxSipNumber,
+    from: config.telnyxSipNumber,
     client_state: clientState,
     timeout_secs: 30,
   });
